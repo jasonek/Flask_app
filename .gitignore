@@ -3,5 +3,6 @@
 *.DS_Store
 
 venv-flasky/
+app/__pycache__/
 
 *.sqlite
