@@ -6,3 +6,4 @@ venv-flasky/
 app/__pycache__/
 
 *.sqlite
+*.pyc
