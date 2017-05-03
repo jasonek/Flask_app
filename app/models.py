@@ -40,7 +40,7 @@ class User(UserMixin, db.Model):
         serializer = Serializer(current_app.config['SECRET_KEY'], expiration)
         return serializer.dumps({'confirm': self.id})
 
-    def confirm_token(self, token):
+    def confirm(self, token):
         serializer = Serializer(current_app.config['SECRET_KEY'], expiration)
         try:
             data = serializer.loads(token)
