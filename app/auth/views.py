@@ -4,6 +4,7 @@ from . import auth
 from ..models import User
 from .forms import LoginForm, RegistrationForm
 from .. import db
+from ..email import send_mail
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -31,6 +32,9 @@ def register():
     if form.validate_on_submit():
         user = User(email=form.email.data, username=form.username.data, password=form.password.data)
         db.session.add(user)
-        flash('You can now log in')
+        db.session.commit()
+        token = user.generate_confirmation_token()
+        send_email(user.email, 'Confirm your account','auth/email/confirm',user=user, token=token)
+        flash('A confirmation email has been sent to you by email)
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
